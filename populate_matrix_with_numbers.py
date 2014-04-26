@@ -1,6 +1,6 @@
 # VIRTUAL MEMORY/POINTERS. WHAT IS GOING ON. 
 
-m = [[0]*3]*3
+m = [[0]*3]*3 # this will fuck shit up
 m = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 nums = range(1, 10)
 
