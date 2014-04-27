@@ -1,7 +1,10 @@
 # VIRTUAL MEMORY/POINTERS. WHAT IS GOING ON. 
 
 m = [[0]*3]*3 # this will fuck shit up
+
+# the following two will produce independent rows
 m = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+m = [[0]*3, [0]*3, [0]*3]
 nums = range(1, 10)
 
 nums_pointer = 0
