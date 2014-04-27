@@ -36,18 +36,19 @@ def permutString(s):
     for i in range(len(s)):
             element = s[i]
             temp = list(s[:])
+            # print 'PRINT THIS', temp
             temp.pop(i)
-            # temp = str(temp)
 
             temp_perms = permutList(temp)
             for r in temp_perms:
                 # permutations.extend([[element] + r])
-                permutations += [[element] + r]
+                new = [element] + r
+                permutations += [''.join(new)]
     return permutations
 
 print permutList(range(3))
 
-print permutString('pokemon')
+print permutString('pow')
 
 
 
