@@ -1,5 +1,6 @@
 import re
 num_pattern = re.compile('[0-9]+')
+alpha_pattern = re.compile('[a-zA-Z]')
 op_pattern = re.compile('[*+-/]')
 
 PRECEDENCE = {
@@ -22,8 +23,8 @@ def create_ast(user_input):
 
     while tokens: 
         token = tokens.pop(0)
-        # number
-        if num_pattern.match(token):
+        # number or alphabetic character
+        if num_pattern.match(token) or alpha_pattern.match(token):
             out_queue.append(token)
         # operator
         elif op_pattern.match(token):
