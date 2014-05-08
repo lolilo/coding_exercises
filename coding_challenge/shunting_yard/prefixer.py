@@ -67,23 +67,54 @@ def create_out_queue(user_input):
 
 def queue_to_postfix(queue):
 
-    if not queue:
-        return ''
-
     if len(queue) == 3: # base case
         operator = queue[2]
         arg1 = queue[0]
         arg2 = queue[1]
         return '(' + arg1 + ' ' + arg2 + ' ' + operator + ')'
 
-    out = '('
-    first = queue.pop(0)
-    while not op_pattern.match(first):
-        out += first + ' '
-        first = queue.pop(0)
-    # operator found
-    out += first + ')'
-    return '(' + out + queue_to_postfix(queue) + ')'
+    operator = queue.pop(-1)
+
+    i = -1
+    arg1 = queue[i]
+    # if operator, must collapse. Otherwise it's a number or variable; no modification needed.
+    if op_pattern.match(arg1):
+        
+        # while not an operator, keep adding to queue to pass recursivly
+        while not op_pattern.match(queue[i-1]):
+            i -= 1
+        arg1_queue = queue[i:] # should be a complete expression
+        arg1 = queue_to_postfix(arg1_queue)
+
+    j = i-1
+    arg2 = queue[j]
+
+    if op_pattern.match(arg2):
+    
+        # while not an operator, keep adding to queue to pass recursivly
+        while not op_pattern.match(queue[j-1]):
+            j -= 1
+        arg2_queue = queue[j:]
+        arg2 = queue_to_postfix(arg2_queue)
+
+
+
+    return '(' + queue_to_postfix
+
+
+    # if not queue:
+    #     return ''
+
+
+
+    # out = '('
+    # first = queue.pop(0)
+    # while not op_pattern.match(first):
+    #     out += first + ' '
+    #     first = queue.pop(0)
+    # # operator found
+    # out += first + ')'
+    # return '(' + out + queue_to_postfix(queue) + ')'
 
 def infix_to_postfix(user_input):
     out_queue = create_out_queue(user_input)
