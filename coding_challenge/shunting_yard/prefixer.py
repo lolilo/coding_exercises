@@ -10,12 +10,6 @@ PRECEDENCE = {
     '(': 0
 }
 
-# def precedence(operator):
-#     if operator in ['+', '-']:
-#         return 1
-#     if operator in ['*', '/']:
-#         return 2
-
 def parse(user_input):
     tokens = user_input.split()
     return tokens
@@ -28,29 +22,23 @@ def create_ast(user_input):
 
     while tokens: 
         token = tokens.pop(0)
-
         # number
         if num_pattern.match(token):
             out_queue.append(token)
-
         # operator
         elif op_pattern.match(token):
-            # print '\noperator', token
-
             token_precedence = PRECEDENCE[token]
             if not op_stack or PRECEDENCE[op_stack[-1]] < token_precedence:
                 op_stack.append(token)
 
             # a non-empty stack exists; check precedence of top of stack
             elif PRECEDENCE[op_stack[-1]] >= token_precedence:
-                operator = op_stack.pop()
                 # group together an expression
-
-                print out_queue
+                operator = op_stack.pop()
                 arg2 = out_queue.pop(-1)
                 arg1 = out_queue.pop(-1)
                 out_queue.append([arg1, arg2, operator])
-
+                # append new operator to stack
                 op_stack.append(token)
             else: 
                 print 'this should not print ever'
@@ -61,17 +49,14 @@ def create_ast(user_input):
 
         # right parenthesis
         elif token == ')':
-            # print 'op_stack', op_stack
-
             next = op_stack.pop(-1)
             while next != '(':
-                print next
                 arg2 = out_queue.pop(-1)
                 arg1 = out_queue.pop(-1)
-                # print 'expression', [arg1, arg2, next]
                 out_queue.append([arg1, arg2, next])   
                 next = op_stack.pop(-1)     
-            # when we find '(', simply discard
+            # when we find '(', simply discard, don't do anything with 'next' at this point
+
         else:
             print "Unexpected token %r" %token
 
@@ -81,7 +66,6 @@ def create_ast(user_input):
         arg2 = out_queue.pop(-1)
         arg1 = out_queue.pop(-1)
         out_queue.append([arg1, arg2, operator])
-    # print out_queue
     return out_queue
 
 # takes in an ast in the form of a list and outputs a string of the expression 
