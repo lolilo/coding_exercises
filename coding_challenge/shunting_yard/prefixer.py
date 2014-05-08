@@ -35,7 +35,7 @@ def create_ast(user_input):
 
         # operator
         elif op_pattern.match(token):
-            print '\noperator', token
+            # print '\noperator', token
 
             token_precedence = PRECEDENCE[token]
             if not op_stack or PRECEDENCE[op_stack[-1]] < token_precedence:
@@ -61,14 +61,14 @@ def create_ast(user_input):
 
         # right parenthesis
         elif token == ')':
-            print 'op_stack', op_stack
+            # print 'op_stack', op_stack
 
             next = op_stack.pop(-1)
             while next != '(':
                 print next
                 arg2 = out_queue.pop(-1)
                 arg1 = out_queue.pop(-1)
-                print 'expression', [arg1, arg2, next]
+                # print 'expression', [arg1, arg2, next]
                 out_queue.append([arg1, arg2, next])   
                 next = op_stack.pop(-1)     
             # when we find '(', simply discard
@@ -97,7 +97,6 @@ def ast_to_postfix(ast):
 
 def infix_to_postfix(user_input):
     ast = create_ast(user_input)[0]
-    # print 'ast is', ast
     return ast_to_postfix(ast)
 
 s = '3 * 1 + ( 9 + 1 ) / 4'
