@@ -1,14 +1,13 @@
 import re
 num_pattern = re.compile('[0-9]+')
-op_pattern = re.compile('[*+-/(]')
-rparen_pattern = re.compile('[)]')
+op_pattern = re.compile('[*+-/]')
 
 PRECEDENCE = {
     '+': 1,
     '-': 1,
     '/': 2,
     '*': 2,
-    '(': 100
+    '(': 0
 }
 
 # def precedence(operator):
@@ -29,13 +28,16 @@ def create_ast(user_input):
 
     while tokens: 
         token = tokens.pop(0)
+
+        # number
         if num_pattern.match(token):
             out_queue.append(token)
+
+        # operator
         elif op_pattern.match(token):
             print '\noperator', token
 
             token_precedence = PRECEDENCE[token]
-
             if not op_stack or PRECEDENCE[op_stack[-1]] < token_precedence:
                 op_stack.append(token)
 
@@ -52,12 +54,23 @@ def create_ast(user_input):
                 op_stack.append(token)
             else: 
                 print 'this should not print ever'
-        elif rparen_pattern.match(token):
+
+        # left parenthesis
+        elif token == '(':
+            op_stack.append(token)
+
+        # right parenthesis
+        elif token == ')':
+            print 'op_stack', op_stack
+
             next = op_stack.pop(-1)
             while next != '(':
+                print next
                 arg2 = out_queue.pop(-1)
                 arg1 = out_queue.pop(-1)
-                out_queue.append([arg1, arg2, next])        
+                print 'expression', [arg1, arg2, next]
+                out_queue.append([arg1, arg2, next])   
+                next = op_stack.pop(-1)     
             # when we find '(', simply discard
         else:
             print "Unexpected token %r" %token
