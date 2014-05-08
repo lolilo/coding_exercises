@@ -84,4 +84,4 @@ def infix_to_postfix(user_input):
     return ast_to_postfix(ast)
 
 s = '3 * 1 + ( 9 + 1 ) / 4'
-print create_ast(s)
+# print create_ast(s)

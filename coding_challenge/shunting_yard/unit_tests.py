@@ -14,6 +14,10 @@ class TestPrefixer(unittest.TestCase):
     #     self.assertEqual(infix_to_prefix('3 * x + ( 9 + y ) / 4'), '(+ (* 3 x) (/ (+ 9 y) 4))')
 
     def test_infix_to_postfix(self):
+        self.assertEqual(infix_to_postfix('3'), '3')
+        self.assertEqual(infix_to_postfix('1 + 1'), '(1 1 +)')
+        self.assertEqual(infix_to_postfix('2 * 5 + 1'), '((2 5 *) 1 +)')
+        self.assertEqual(infix_to_postfix('2 * ( 5 + 1 )'), '(2 (5 1 +) *)')
         self.assertEqual(infix_to_postfix('3 + 4 * 2'), '(3 (4 2 *) +)')
         self.assertEqual(infix_to_postfix('3 * 4 - 2'), '((3 4 *) 2 -)')
         self.assertEqual(infix_to_postfix('3 * 1 + ( 9 + 1 ) / 4'), '((3 1 *) ((9 1 +) 4 /) +)')
