@@ -120,6 +120,8 @@ def evaluate_expression(user_input):
     return evaluate_ast(ast)   
 
 def read_in_file_from_commandline():
+    # could also use arg parse or opt parse python module
+
     args = sys.argv # obtain list of args from commandline
     r_flag = False
     proper_setup = True
@@ -147,27 +149,7 @@ def read_in_file_from_commandline():
             print infix_to_postfix(expression)
 
 def main():
-    # s = '3 * 1 + ( 9 + 1 ) / 4'
-    # s = 'y * 1 + ( 9 + 1 ) / 4'
-    # ast = create_ast(s)[0]
-    # print ast
-    # print ast_to_postfix(ast)
-    # print evaluate(ast)
     read_in_file_from_commandline()
 
 if __name__ == "__main__":
     main()
-
-
-
-
-# arg parse python module
-# opt parse
-
-# or just write own
-
-# if arg == '-r':
-#     r_is_true = True
-
-# if r_is_true:
-#     do extra stuff. 
