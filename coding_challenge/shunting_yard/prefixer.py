@@ -1,7 +1,10 @@
-import re
-num_pattern = re.compile('[0-9]+')
-alpha_pattern = re.compile('[a-zA-Z]')
-op_pattern = re.compile('[*+-/]')
+import re, sys
+from os.path import exists
+import operator as op
+
+NUM_PATTERN = re.compile('[0-9]+')
+ALPHA_PATTERN = re.compile('[a-zA-Z]')
+OP_PATTERN = re.compile('[*+-/]')
 
 PRECEDENCE = {
     '+': 1,
@@ -9,6 +12,13 @@ PRECEDENCE = {
     '/': 2,
     '*': 2,
     '(': 0
+}
+
+EXECUTE = { 
+    '+' : op.add, 
+    '-' : op.sub, 
+    '*' : op.mul, 
+    '/' : op.div, 
 }
 
 def parse(user_input):
@@ -24,10 +34,10 @@ def create_ast(user_input):
     while tokens: 
         token = tokens.pop(0)
         # number or alphabetic character
-        if num_pattern.match(token) or alpha_pattern.match(token):
+        if NUM_PATTERN.match(token) or ALPHA_PATTERN.match(token):
             out_queue.append(token)
         # operator
-        elif op_pattern.match(token):
+        elif OP_PATTERN.match(token):
             token_precedence = PRECEDENCE[token]
             if not op_stack or PRECEDENCE[op_stack[-1]] < token_precedence:
                 op_stack.append(token)
@@ -75,14 +85,90 @@ def ast_to_postfix(ast):
     if len(ast) == 1: # a single number as a string
         return ast
     operator = ast[-1]
-    arg1 = ast[-3]
-    arg2 = ast[-2]
-
-    return '(' + ast_to_postfix(arg1) + ' ' + ast_to_postfix(arg2) + ' ' + operator + ')'
+    arg1 = ast_to_postfix(ast[-3])
+    arg2 = ast_to_postfix(ast[-2])
+    return '(' + arg1 + ' ' + arg2 + ' ' + operator + ')'
 
 def infix_to_postfix(user_input):
     ast = create_ast(user_input)[0]
     return ast_to_postfix(ast)
 
-s = '3 * 1 + ( 9 + 1 ) / 4'
-# print create_ast(s)
+# returns an int if input string is num, otherwise returns input string
+def num_string_to_int(s):
+    if NUM_PATTERN.match(s):
+        return int(s)
+    else: 
+        return s
+
+def evaluate(ast):
+    if len(ast) == 1:
+        print ast
+        if NUM_PATTERN.match(ast):
+            return int(ast)
+        if ALPHA_PATTERN.match(ast):
+            return ast
+    # if len(ast) == 3:
+    #     operator = ast.pop(-1)
+    #     arg1 = num_string_to_int(ast.pop(-3))
+    #     arg2 = num_string_to_int(ast.pop(-2))
+    #     if type(arg1) == type(arg2) == int:
+    #         return EXECUTE[operator](arg1, arg2)
+    #     else: 
+    #         return '(' + str(arg1) + ' ' + str(arg2) + ' ' + operator + ')'
+    else:
+        operator = ast[-1]
+        arg1 = evaluate(ast[-3])
+        arg2 = evaluate(ast[-2])
+        if type(arg1) == type(arg2) == int:
+            return EXECUTE[operator](arg1, arg2)
+        else: 
+            return '(' + arg1 + ' ' + arg2 + ' ' + operator + ')'
+
+def read_in_file_from_commandline():
+    args = sys.argv # obtain list of args from commandline
+    r_flag = False
+    infix_file = ''
+    while args:
+        arg = args.pop(0)
+        if arg == '-r':
+            r_flag = True
+        else:
+            # this first be incorrectly assigned to prefixer.py, 
+            # but later replaced with the proper filename
+            if exists(arg):
+                infix_file = arg
+            else: 
+                print '%r does not exist!' % arg 
+
+    if infix_file:
+        print 'huh'
+        infix_file = open(infix_file)
+        expression = infix_file.readline().strip()
+
+        if r_flag: 
+            print evaluate(expression)
+        else: 
+            print infix_to_postfix(expression)
+
+def main():
+    s = '3 * 1 + ( 9 + 1 ) / 4'
+    ast = create_ast(s)[0]
+    print evaluate(ast)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+# arg parse python module
+# opt parse
+
+# or just write own
+
+# if arg == '-r':
+#     r_is_true = True
+
+# if r_is_true:
+#     do extra stuff. 
