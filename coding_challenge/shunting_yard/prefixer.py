@@ -100,33 +100,29 @@ def num_string_to_int(s):
     else: 
         return s
 
-def evaluate(ast):
+def evaluate_ast(ast):
     if len(ast) == 1:
         if NUM_PATTERN.match(ast):
             return int(ast)
         if ALPHA_PATTERN.match(ast):
             return ast
-    # if len(ast) == 3:
-    #     operator = ast.pop(-1)
-    #     arg1 = num_string_to_int(ast.pop(-3))
-    #     arg2 = num_string_to_int(ast.pop(-2))
-    #     if type(arg1) == type(arg2) == int:
-    #         return EXECUTE[operator](arg1, arg2)
-    #     else: 
-    #         return '(' + str(arg1) + ' ' + str(arg2) + ' ' + operator + ')'
     else:
         operator = ast[-1]
-        arg1 = evaluate(ast[-3])
-        arg2 = evaluate(ast[-2])
+        arg1 = evaluate_ast(ast[-3])
+        arg2 = evaluate_ast(ast[-2])
         if type(arg1) == type(arg2) == int:
             return EXECUTE[operator](arg1, arg2)
         else: 
             return '(' + str(arg1) + ' ' + str(arg2) + ' ' + operator + ')'
 
+def evaluate_expression(user_input):
+    ast = create_ast(user_input)[0]
+    return evaluate_ast(ast)   
+
 def read_in_file_from_commandline():
     args = sys.argv # obtain list of args from commandline
     r_flag = False
-    infix_file = ''
+    proper_setup = True
     while args:
         arg = args.pop(0)
         if arg == '-r':
@@ -137,26 +133,27 @@ def read_in_file_from_commandline():
             if exists(arg):
                 infix_file = arg
             else: 
+                proper_setup = False
                 print '%r does not exist!' % arg 
 
-    if infix_file:
-        print 'huh'
+    if proper_setup:
+        print infix_file
         infix_file = open(infix_file)
         expression = infix_file.readline().strip()
 
         if r_flag: 
-            print evaluate(expression)
+            print evaluate_expression(expression)
         else: 
             print infix_to_postfix(expression)
 
 def main():
-    s = '3 * 1 + ( 9 + 1 ) / 4'
-    s = 'y * 1 + ( 9 + 1 ) / 4'
-    ast = create_ast(s)[0]
-    print ast
-    print ast_to_postfix(ast)
-    print evaluate(ast)
-
+    # s = '3 * 1 + ( 9 + 1 ) / 4'
+    # s = 'y * 1 + ( 9 + 1 ) / 4'
+    # ast = create_ast(s)[0]
+    # print ast
+    # print ast_to_postfix(ast)
+    # print evaluate(ast)
+    read_in_file_from_commandline()
 
 if __name__ == "__main__":
     main()
