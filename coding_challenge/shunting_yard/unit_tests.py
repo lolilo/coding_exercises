@@ -22,7 +22,8 @@ class TestPrefixer(unittest.TestCase):
 
     def test_ast_to_postfix(self):
         self.assertEqual(ast_to_postfix([['3', '4', '*'], '2', '-']), '((3 4 *) 2 -)')
-    
+        self.assertEqual(ast_to_postfix([['3', '1', '*'], [['9', '1', '+'], '4', '/'], '+']), '((3 1 *) ((9 1 +) 4 /) +)')
+
     def test_infix_to_postfix(self):
         self.assertEqual(infix_to_postfix('3'), '3')
         self.assertEqual(infix_to_postfix('1 + 1'), '(1 1 +)')
@@ -34,5 +35,10 @@ class TestPrefixer(unittest.TestCase):
         self.assertEqual(infix_to_postfix('3 * x - 2'), '((3 x *) 2 -)')
         self.assertEqual(infix_to_postfix('y * 1 + ( 9 + z ) / 4'), '((y 1 *) ((9 z +) 4 /) +)')
 
+    def test_evaluate(self):
+        self.assertEqual(evaluate([['3', '1', '*'], [['9', '1', '+'], '4', '/'], '+']), 5)
+        self.assertEqual(evaluate([['y', '1', '*'], [['9', 'z', '+'], '4', '/'], '+']), '((y 1 *) ((9 z +) 4 /) +)')
+        self.assertEqual(evaluate([['y', '1', '*'], [['9', '1', '+'], '4', '/'], '+']), '((y 1 *) 2 +)')
+        
 if __name__ == '__main__':
     unittest.main()

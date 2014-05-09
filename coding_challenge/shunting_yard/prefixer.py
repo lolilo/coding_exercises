@@ -102,7 +102,6 @@ def num_string_to_int(s):
 
 def evaluate(ast):
     if len(ast) == 1:
-        print ast
         if NUM_PATTERN.match(ast):
             return int(ast)
         if ALPHA_PATTERN.match(ast):
@@ -122,7 +121,7 @@ def evaluate(ast):
         if type(arg1) == type(arg2) == int:
             return EXECUTE[operator](arg1, arg2)
         else: 
-            return '(' + arg1 + ' ' + arg2 + ' ' + operator + ')'
+            return '(' + str(arg1) + ' ' + str(arg2) + ' ' + operator + ')'
 
 def read_in_file_from_commandline():
     args = sys.argv # obtain list of args from commandline
@@ -152,7 +151,10 @@ def read_in_file_from_commandline():
 
 def main():
     s = '3 * 1 + ( 9 + 1 ) / 4'
+    s = 'y * 1 + ( 9 + 1 ) / 4'
     ast = create_ast(s)[0]
+    print ast
+    print ast_to_postfix(ast)
     print evaluate(ast)
 
 
