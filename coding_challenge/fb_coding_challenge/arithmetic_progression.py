@@ -12,16 +12,20 @@ ap = "1 21 31 41 51"
 #user_input = user_input.split('\n')
 #print n
 
-def find_missing(n, ap):
 
+# We're given the length of the given progression...how can I better use this information? 
+# Do I not need to transform stuff to an int list?
+# How can I reduce time complexity?
+def find_missing(n, ap):
+    length_of_progression = int(n)
     ap = ap.split()
     # create a list of int
-    for i in range(len(ap)):
+    for i in range(length_of_progression):
         ap[i] = int(ap[i])
 
     init_diff = ap[1] - ap[0]
 
-    for i in range(int(n)-1):
+    for i in range(length_of_progression-1):
         this = ap[i]
         next = ap[i+1]
         curr_diff = next - this
