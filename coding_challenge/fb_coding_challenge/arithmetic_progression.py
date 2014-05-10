@@ -42,7 +42,6 @@ def loop():
     while True:
         n = int(raw_input('n > '))
         ap = raw_input('arithmetic progression > ')
-
         print find_missing(n, ap)
 
 def main():
@@ -51,6 +50,6 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-# 45 minutes. Finished with 18 minutes to spare. 7 test cases. Didn't consider decreasing progression at first, so passed 5/7 tests. 
+# 45 minutes. Finished with 18 minutes to spare. 7 test cases. 
+# Didn't consider decreasing progression at first, so passed 5/7 tests. 
 # Fixed easily enough.
