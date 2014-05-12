@@ -1,8 +1,5 @@
 # user_input = raw_input()
 
-n = "5"
-ap = "1 21 31 41 51"
-
 # arithmetic progression. 
 # two lines of raw input (stdin), first one being length of given progression, second the arithmetic progression
 # find the missing number and print it to stdout
@@ -49,9 +46,12 @@ def loop():
         print find_missing(n, ap)
 
 def main():
-    loop()
+    # loop()
+    print find_missing(n, ap)
 
 if __name__ == "__main__":
+    n = "5"
+    ap = "1 21 31 41 51"
     main()
 
 # 45 minutes. Finished with 18 minutes to spare. 7 test cases. 
