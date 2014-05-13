@@ -1,6 +1,6 @@
 # Given a Tweet, find all usernames within the Tweet.
 import re
-USERNAME_PATTERN = re.compile('[.,:;?()\[\]>< ]@[\w]+')
+USERNAME_PATTERN = re.compile('[^\w!]@[\w]+')
 # \w indicates a word chracter
 # A word character is a character from a-z, A-Z, 0-9, 
 # including the _ (underscore) character.
@@ -17,7 +17,7 @@ def find_usernames(tweet):
     return username_list
 
 def main():
-    tweet = "Hello @Perforce! Hi?@Michael! This[@isatest. Does this )@pass?"
+    tweet = "Hello ^@Perforce! Hi?@Michael! This[@isatest. Does this )@pass?"
     print find_usernames(tweet)
 
 if __name__ == "__main__":
