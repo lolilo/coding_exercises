@@ -11,15 +11,18 @@ Just need another check. We can sort the lists to redefine what is considered un
 def memoize(fn):
     cache = {}
     def decorated_fn(*args):
-        print type(args)
-        if cache.get(args): # unhashable type, list? Whaaaat. It's a tuple! 
-            return cache[args]
+        # need to convert key into immutable. cannot have nested list inside tuple
+        key_1 = tuple(args[0])
+        key = (key_1, args[1])
+
+        if cache.get(key): # unhashable type, list? Whaaaat. It's a tuple! 
+            return cache[key]
         else:
-            cache[args] = fn(*args)
-            return cache[args]
+            cache[key] = fn(*args)
+            return cache[key]
     return decorated_fn
 
-# @memoize
+@memoize
 def add_to_total(scores, t): # takes in a list of ints and a target score
     out = []
 
@@ -40,8 +43,8 @@ def add_to_total(scores, t): # takes in a list of ints and a target score
         for l in rest:
             out.append([score] + l)
         
-    print 'out is', out
-    print ''
+    # print 'out is', out
+    # print ''
     # be careful with data types. All returned values should be list of list(s).
 
     return out
