@@ -4,6 +4,7 @@
 
 def solve_coin_change(coins, value):
     """A dynamic solution to the coin change problem"""
+    # can also do with dictionary/actual hash table rather than list
 
     table = [None for x in range(value + 1)] # initialize cache list
     table[0] = [] # set first element of list to an empty list
