@@ -1,0 +1,49 @@
+"""
+Given a set of possible scores in a game and a total target score, 
+print out all the possible ways to arrive at that target score.
+
+([2, 6, 10], 10) -> [[2, 2, 2, 2, 2], [6, 2, 2], [10]]
+"""
+
+def memoize(fn):
+    cache = {}
+    def decorated_fn(*args):
+        print type(args)
+        if cache.get(args): # unhashable type, list? Whaaaat. It's a tuple! 
+            return cache[args]
+        else:
+            cache[args] = fn(*args)
+            return cache[args]
+    return decorated_fn
+
+# @memoize
+def add_to_total(scores, t): # takes in a list of ints and a target score
+    out = []
+
+    if t == 0:
+        return [out]
+
+    if t in scores:
+        out.append([t])
+
+    for score in scores:
+        if score >= t:
+            continue
+        # find all possible lists that can add up to number needed to reach target
+        rest = add_to_total(scores, t-score)
+
+        # print 'rest is', rest
+
+        for l in rest:
+            out.append([score] + l)
+        
+    print 'out is', out
+    print ''
+    # be careful with data types. All returned values should be list of list(s).
+
+    return out
+
+l = [2, 6, 10]
+t = 10
+print add_to_total(l, t)
+
