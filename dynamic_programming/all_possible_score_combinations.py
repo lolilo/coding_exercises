@@ -3,6 +3,9 @@ Given a set of possible scores in a game and a total target score,
 print out all the possible ways to arrive at that target score.
 
 ([2, 6, 10], 10) -> [[2, 2, 2, 2, 2], [6, 2, 2], [10]]
+
+Well, I'm getting [[10], [2, 2, 6], [2, 2, 2, 2, 2], [2, 6, 2], [6, 2, 2]]
+Just need another check. We can sort the lists to redefine what is considered unique combinations.
 """
 
 def memoize(fn):
