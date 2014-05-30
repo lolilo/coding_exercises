@@ -67,10 +67,23 @@ def recursive_coin_change(coins, t):
     return final_list
 
 
+def memoize(f):
+    cache = {}
+    def decorated_function(*args):
+        args = (tuple(args[0]), args[1])
+
+        if args in cache:
+            return cache[args]
+        else:
+            cache[args] = f(*args)
+            return cache[args]
+    return decorated_function
+
 def better_recursive_coin_change(coins, t): 
     if t == 0: # This only happens if initial input t is 0. 
         return []
 
+    @memoize
     def recursion_helper(coins, t):
         if t in coins:
             return [t]
