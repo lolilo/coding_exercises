@@ -36,11 +36,45 @@ def solve_coin_change(coins, value):
     else:
         print 'No solution possible for coin list %r and target value %r.' % (coins, value)
 
+def recursive_coin_change(coins, t): 
+    if t in coins:
+        return [t]
+
+    if t == 0: # would this ever happen? 
+        return []
+
+    if min(coins) > t: # solution not possible 
+        return 'solution not possible'
+
+    final_list = []
+
+    for coin in coins:
+        if coin > t:
+            continue
+        new_t = t - coin
+        rest = recursive_coin_change(coins, new_t)
+
+        if rest == 'solution not possible':
+            continue
+
+        coin_list = [coin]
+        coin_list.extend(rest) # be mindful -- this returns nothing! alters list in place. earlier I was doing coin_list = [coin].extend(rest)
+        if not final_list or len(final_list) > len(coin_list):
+            final_list = coin_list
+
+    if final_list == []:
+        return 'solution not possible'
+
+    return final_list
+
 
 coins = [1, 3, 4]
 value = 11
 solve_coin_change(coins, value)
+print recursive_coin_change(coins, value)
 
 coins = [2, 4]
 value = 3
 solve_coin_change(coins, value)
+print recursive_coin_change(coins, value)
+
