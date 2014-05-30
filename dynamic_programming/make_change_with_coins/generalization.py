@@ -13,39 +13,33 @@ def solve_coin_change(coins, value):
     for i in range(1, value + 1):
         
         for coin in coins:
-            print '' 
-            print 'i is', i
-            print 'coin is', coin
-            print 'table is', table
-            print table[i-coin]
+            # print '' 
+            # print 'i is', i
+            # print 'coin is', coin
+            # print 'table is', table
+            # print table[i-coin]
             if coin > i: # coin > target value i; skip it 
                 continue # cannot completely break out of loop, since input coins list is unsorted
 
-            # if coin value not in table or if we can make a shorter list for table[i]
-            
+            # if coin value not in table or if we can make a shorter list for existing table[i]
             can_improve_existing = (table[i - coin] != None and table[i] != None) and len(table[i - coin]) + 1 < len(table[i])
             if not table[i] or can_improve_existing: 
-                # we could combine the following 'if' with above, but this is more readable
-                
+
                 if table[i - coin] != None: # empty list is valid, so we need to specify != None here
-                    
                     table[i] = table[i - coin][:] # create copy of list rather than point to same one
                     table[i].append(coin) # append new coin to list
                     # even if we're doing table[3], we're appending 3 to an empty list, since table[i-coin] = table[0] = []
 
     # print table
-
-    # if table[-1] != None: # last entry in table will be the for value, same as table[value]
     if table[value] != None:
-        print value
-        print '%d coins: %s' % (len(table[value]), table[value])
+        print '%d coins to sum to target value %d: %s' % (len(table[value]), value, table[value])
     else:
         print 'No solution possible for coin list %r and target value %r.' % (coins, value)
 
 
-# coins = [1, 3, 4]
-# value = 11
-# solve_coin_change(coins, value)
+coins = [1, 3, 4]
+value = 11
+solve_coin_change(coins, value)
 
 coins = [2, 4]
 value = 3
