@@ -40,7 +40,7 @@ def recursive_coin_change(coins, t):
     if t in coins:
         return [t]
 
-    if t == 0: # would this ever happen? 
+    if t == 0: # This only happens if initial input t is 0. 
         return []
 
     if min(coins) > t: # solution not possible 
@@ -75,6 +75,11 @@ print recursive_coin_change(coins, value)
 
 coins = [2, 4]
 value = 3
+solve_coin_change(coins, value)
+print recursive_coin_change(coins, value)
+
+coins = [2, 4]
+value = 0
 solve_coin_change(coins, value)
 print recursive_coin_change(coins, value)
 
