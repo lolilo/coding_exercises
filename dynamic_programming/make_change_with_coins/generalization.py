@@ -6,8 +6,9 @@ def solve_coin_change(coins, value):
     """A dynamic solution to the coin change problem"""
     # can also do with dictionary/actual hash table rather than list
 
-    table = [None for x in range(value + 1)] # initialize cache list
-    table[0] = [] # set first element of list to an empty list
+    # table = [None for x in range(value + 1)] # initialize cache list
+    table = [None] * (value + 1)
+    table[0] = [] # set first element of list to an empty list; takes 0 coins to make zero
 
     for i in range(1, value + 1):
         
@@ -15,7 +16,7 @@ def solve_coin_change(coins, value):
             if coin > i: # coin > target value i; skip it 
                 continue # cannot completely break out of loop, since input coins list is unsorted
 
-            # if coine value not in table or if we can make a shorter list for table[i]
+            # if coin value not in table or if we can make a shorter list for table[i]
             elif not table[i] or len(table[i - coin]) + 1 < len(table[i]): 
                 # we could combine the following 'if' with above, but this is more readable
                 
