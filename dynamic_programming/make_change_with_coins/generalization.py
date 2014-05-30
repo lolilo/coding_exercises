@@ -44,7 +44,7 @@ def recursive_coin_change(coins, t):
         return []
 
     if min(coins) > t: # solution not possible 
-        return 'solution not possible'
+        return 'Solution not possible.'
 
     final_list = []
 
@@ -54,7 +54,7 @@ def recursive_coin_change(coins, t):
         new_t = t - coin
         rest = recursive_coin_change(coins, new_t)
 
-        if rest == 'solution not possible':
+        if rest == 'Solution not possible.': # this check is O(m) where m = len(string)
             continue
 
         coin_list = [coin]
@@ -63,23 +63,61 @@ def recursive_coin_change(coins, t):
             final_list = coin_list
 
     if final_list == []:
-        return 'solution not possible'
-
+        return 'Solution not possible.'
     return final_list
+
+
+def better_recursive_coin_change(coins, t): 
+    if t == 0: # This only happens if initial input t is 0. 
+        return []
+
+    def recursion(coins, t):
+        if t in coins:
+            return [t]
+
+        if min(coins) > t: # solution not possible 
+            return None
+
+        final_list = []
+
+        for coin in coins:
+            if coin > t:
+                continue
+            new_t = t - coin
+            rest = recursive_coin_change(coins, new_t)
+
+            if rest == None:
+                continue
+
+            coin_list = [coin]
+            coin_list.extend(rest) # be mindful -- this returns nothing! alters list in place. earlier I was doing coin_list = [coin].extend(rest)
+            if not final_list or len(final_list) > len(coin_list):
+                final_list = coin_list
+
+        if final_list == []:
+            return None
+        return final_list
+
+    answer = recursion(coins, t)
+    if answer == None:
+        return 'Solution not possible.'
+    return answer
 
 
 coins = [1, 3, 4]
 value = 11
 solve_coin_change(coins, value)
 print recursive_coin_change(coins, value)
+print better_recursive_coin_change(coins, value)
 
 coins = [2, 4]
 value = 3
 solve_coin_change(coins, value)
 print recursive_coin_change(coins, value)
+print better_recursive_coin_change(coins, value)
 
 coins = [2, 4]
 value = 0
 solve_coin_change(coins, value)
 print recursive_coin_change(coins, value)
-
+print better_recursive_coin_change(coins, value)

@@ -33,7 +33,7 @@ def add_to_total(scores, t): # takes in a list of ints and a target score
         out.append([t])
 
     for score in scores:
-        if score >= t:
+        if score > t:
             continue
         # find all possible lists that can add up to number needed to reach target
         rest = add_to_total(scores, t-score)
@@ -41,7 +41,7 @@ def add_to_total(scores, t): # takes in a list of ints and a target score
         # print 'rest is', rest
 
         for l in rest:
-            out.append([score] + l)
+            out.append([score] + l) # need to create copies of [score] + 1
         
     # print 'out is', out
     # print ''
