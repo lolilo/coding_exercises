@@ -71,7 +71,7 @@ def better_recursive_coin_change(coins, t):
     if t == 0: # This only happens if initial input t is 0. 
         return []
 
-    def recursion(coins, t):
+    def recursion_helper(coins, t):
         if t in coins:
             return [t]
 
@@ -79,12 +79,11 @@ def better_recursive_coin_change(coins, t):
             return None
 
         final_list = []
-
         for coin in coins:
             if coin > t:
                 continue
             new_t = t - coin
-            rest = recursive_coin_change(coins, new_t)
+            rest = recursion_helper(coins, new_t)
 
             if rest == None:
                 continue
@@ -98,8 +97,8 @@ def better_recursive_coin_change(coins, t):
             return None
         return final_list
 
-    answer = recursion(coins, t)
-    if answer == None:
+    answer = recursion_helper(coins, t)
+    if not answer:
         return 'Solution not possible.'
     return answer
 
@@ -109,12 +108,14 @@ value = 11
 solve_coin_change(coins, value)
 print recursive_coin_change(coins, value)
 print better_recursive_coin_change(coins, value)
+print ''
 
 coins = [2, 4]
 value = 3
 solve_coin_change(coins, value)
 print recursive_coin_change(coins, value)
 print better_recursive_coin_change(coins, value)
+print ''
 
 coins = [2, 4]
 value = 0
