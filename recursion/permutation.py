@@ -42,9 +42,10 @@ def permutString(s):
 
             temp_perms = permutList(temp)
             for r in temp_perms:
-                # permutations.extend([[element] + r])
-                new = [element] + r
-                permutations += [''.join(new)]
+                new_permutation = ''.join([element] + r)
+                permutations.append(new_permutation)
+                # new = [element] + r
+                # permutations += [''.join(new)]
     return permutations
 
 print permutList(range(3))
