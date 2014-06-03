@@ -16,7 +16,7 @@
 def permutList(l):
     if not l:
             return [[]]
-    res = []
+    perms = []
     for i in range(len(l)):
             element = l[i]
             temp = l[:]
@@ -24,9 +24,10 @@ def permutList(l):
 
             temp_perms = permutList(temp)
             for r in temp_perms:
-                # res.extend([[element] + r])
-                res += [[element] + r]
-    return res
+                perms.append([element] + r)
+                # perms.extend([[element] + r])
+                # perms += [[element] + r]
+    return perms
 
 def permutString(s):
     if not s:
