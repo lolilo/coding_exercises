@@ -24,7 +24,7 @@ def all_scores(l, t):
 
 	if out == []:
 		return None # can wrap all_scores around another function if we want to return a string instead of None
-	return out
+	return out # could also use wrapper to print out scores rather than return a list
 
 l1 = [2, 5, 10]
 l2 = [1, 2, 5, 10]
