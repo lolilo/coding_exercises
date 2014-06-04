@@ -3,7 +3,7 @@ def quicksort(l):
     def quicksort_helper(l, first, last):
         if first < last: 
             pivot = sort_and_return_partition(l, first, last)
-            print l
+            # print l
             # pivot is in place, so don't need to touch it anymore
             quicksort_helper(l, first, pivot-1)
             quicksort_helper(l, pivot+1, last)
@@ -30,11 +30,16 @@ def quicksort(l):
             lefti += 1
             righti -= 1
             # continue with while loop
-        # at this point, lefti >= righti. Place in the pivot value, then return new pivot index. 
-        temp = l[righti]
-        l[righti] = pivotval
-        l[first] = temp
-        return righti 
+        
+        # at this point, lefti > righti. 
+        # righti is pointing to an element smaller than the first element
+        # Place in the pivot value, then return new pivot index. 
+
+        # temp = l[righti]
+        # l[righti] = pivotval
+        # l[first] = temp
+        l[righti], l[first] = l[first], l[righti]
+        return righti # return an index value
 
     quicksort_helper(l, 0, len(l) - 1)
     return l
@@ -56,17 +61,15 @@ def sort(array):
                 equal.append(x)
             if x > pivotval:
                 greater.append(x)
-        # return sort(less) + equal + sort(greater)
-        print sort(less)
-        return new_list.extend(sort(less))
+        return sort(less) + equal + sort(greater)
     else:  # You need to hande the part at the end of the recursion - when you only have one element in your array, just return the array.
         return array
 
 def main():
     a = [12,4,5,6,7,3,1,15]
-    sort(a)
-    # print a
-    # print quicksort(a)
+    print sort(a)
+    print a
+    print quicksort(a)
 
 if __name__ == "__main__":
     main()
