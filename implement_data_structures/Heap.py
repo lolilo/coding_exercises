@@ -27,13 +27,8 @@ class Heap:
 			i = min_child
 
 	def minChild(self, i):
-		# print 'size', self.size
-		# print 'i', i
-
 		if i * 2 + 1 > self.size:
-			# print 'yo'
 			return i*2
-		# print 'ha', self.heap[i*2], self.heap[i*2+1]
 		if self.heap[i*2] < self.heap[i*2 + 1]: # if it's a tie between the two children, return the right-most child to preserve heap properties/order
 			return i*2 
 		return i*2 + 1
@@ -49,7 +44,7 @@ class Heap:
 
 	def build(self, l):
 		self.size = len(l)
-		i = len(l)//2 # i will be at second to last level of tree
+		i = len(l)//2 # i will be at second to last level of tree, parent of last element
 		self.heap = [0] + l[:] # make sure to create a copy of l! Don't want edits to original list to mess with heap...
 		
 		while i > 0: # percDown all the heap elements
