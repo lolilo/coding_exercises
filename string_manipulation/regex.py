@@ -14,6 +14,7 @@ class Test(unittest.TestCase):
 		self.assertEqual(regex('aa*', 'a'), True)
 		self.assertEqual(regex('.', 'a'), True)
 		self.assertEqual(regex('.*', 'anblskfj'), True)
+		self.assertEqual(regex('a*', 'anblskfj'), False)
 		self.assertEqual(regex('aaa', 'a'), False)
 
 
@@ -21,10 +22,13 @@ def regex(p, s):
 	pi = 0
 	si = 0
 	lp = len(p)
-	sp = len(s)
+	ls = len(s)
 
-	while pi < lp and si < sp:
+	while pi < lp and si < ls:
 		if pi + 1 < lp and p[pi + 1] == '*':
+			if p[pi] == '.': 
+				return True
+
 			while p[pi] == s[si]:
 				si += 1
 			pi += 2
@@ -41,9 +45,13 @@ def regex(p, s):
 				return False
 
 	# at this point, check if we are in a valid state
+	# if we haven't consumed all of the input s, we know it's invalid
+
+	if si < ls: 
+		return False
+
 	# a* and '' are valid, in this case exit while loop for s
 	# aaaaa and a are not valid, again, exited while loop for s
-
 	while pi < lp: 
 		if pi + 1 >= lp: # not a _* 
 			return False
