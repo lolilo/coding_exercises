@@ -53,11 +53,9 @@ def regex(p, s):
 	# a* and '' are valid, in this case exit while loop for s
 	# aaaaa and a are not valid, again, exited while loop for s
 	while pi < lp: 
-		if pi + 1 >= lp: # not a _* 
-			return False
-		if p[pi + 1] == '*': # this is valid
+		if pi + 1 < lp and p[pi + 1] == '*': # this is valid
 			pi += 2
-		else: # not a _* 
+		else: # not _* 
 			return False
 
 	return True
