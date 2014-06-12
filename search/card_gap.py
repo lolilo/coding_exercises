@@ -11,8 +11,19 @@ def hammer(n):
 		return True
 	return False
 
-# card_gap takes in the max possible card gap and returns the card_gap
+# card_gap takes in the max possible card gap and returns the card gap number
 def card_gap(m):
-	
+	start = 0 
+	end = m
+	while start <= end: 
+		middle = (end - start)//2 + start
+		if hammer(n): 
+			start = middle + 1
+		else: 
+			end = middle - 1
+	return start
+
+# edge case
+# start explodes, end does not. m = 1. Which means, start = 0, end = 1, middle = 0
 
 
