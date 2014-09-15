@@ -9,8 +9,16 @@ nrows, ncols = len(grid), len(grid[0])
 # letters and have length >= 3. (With a case-insensitive match.)
 import re
 alphabet = ''.join(set(''.join(grid)))
-bogglable = re.compile('[' + alphabet + ']{3,}$', re.I).match
+bogglable = re.compile('[' + alphabet + ']{3,}$', re.I).match 
+# {m,n} Causes the resulting RE to match from m to n repetitions of the preceding RE, 
+# attempting to match as many repetitions as possible. 
 
+# What is the dollar sign for? Is it necessary? 
+
+
+# rstrip = right strip
+# lstrip = left strip
+# strip = strip white space from both sides
 words = set(word.rstrip('\n') for word in open(DICTIONARY_PATH) if bogglable(word))
 prefixes = set(word[:i] for word in words
                for i in range(2, len(word)+1))
