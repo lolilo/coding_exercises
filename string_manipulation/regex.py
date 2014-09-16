@@ -56,6 +56,7 @@ def regex(p, s):
 	while pi < len_p: 
 		if pi + 1 < len_p and p[pi + 1] == '*': # this is valid
 			pi += 2
+			# assume not multiple repeat in pattern. ex. a**
 		else: # not _* 
 			return False
 
