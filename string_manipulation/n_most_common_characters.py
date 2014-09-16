@@ -6,7 +6,7 @@
 
 # s is a string
 # n is an int
-def most_common_car(s, n):
+def most_common_chars(s, n):
 	if len(s) < n:
 		print "There are fewer than %d characters in %r." % (n, s)
 
