@@ -96,7 +96,6 @@ def make_board(letters=None):
             y += 1
     return board
 
-
 def main():
     load_dictionary()
 
@@ -122,6 +121,7 @@ Example: %prog  T N N H A  I G N E I  S G E I B  C A H N I  O N F O E"""
 
     print '----'
     print 'Total score:', total_score, 'from', len(words), 'words'
+    # Total score: x from 57 words
 
 if __name__ == '__main__':
     main()
