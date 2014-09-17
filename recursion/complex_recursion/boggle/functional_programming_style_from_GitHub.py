@@ -19,18 +19,20 @@ PREFIXES = {}
 WIDTH = 5
 HEIGHT = 5
 OFFSETS = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
-
+WORD_LIST_PATH = 'toy_words.txt'
 
 def load_dictionary():
-    global DICTIONARY
-    global PREFIXES
+    global DICTIONARY 
+    global PREFIXES # in the form of nested dictionaries
 
     DICTIONARY = set()
-    with open('words.txt') as f:
-        for line in f:
-            word = line.strip()
-            if len(word) >= MIN_LENGTH and word.isalpha():
-                DICTIONARY.add(word.lower())
+    # with open(WORD_LIST_PATH) as f:
+    f = open(WORD_LIST_PATH)
+    for line in f:
+        word = line.strip()
+        if len(word) >= MIN_LENGTH and word.isalpha():
+            DICTIONARY.add(word.lower())
+    f.close()
 
     PREFIXES = {}
     for word in sorted(DICTIONARY):
@@ -50,6 +52,20 @@ def is_prefix(prefix):
             return False
         node = node[letter]
     return True
+
+# starting off, positions_used = set(), prefix = ''. We pass this in via the original caller. 
+# update the prefix to include letter at current position
+# if the updated prefix is not a valid prefix, return an empty set
+
+# initialize a set(), found
+# if prefix is in the word dictionary, add prefix to found
+# keep track that we have used this current position, add it to the set positions_used
+# for every possible valid offset / for every possible direction, recursively call find_words and update the set found
+    # invalid are movements that go to a previously visited position / node or go off the boggle board 
+# remove current position from position_used to allow it for use in earlier recursive stack frames/calls
+    # recursive backtracking?
+# return the set found
+
 
 # returns a set of found words
 def find_words(board, positions_used, prefix, pos):
@@ -71,7 +87,7 @@ def find_words(board, positions_used, prefix, pos):
         if not (0 <= new_pos[0] < WIDTH and 0 <= new_pos[1] < HEIGHT):
             continue
 
-        found.update(find_words(board, positions_used, prefix, new_pos))
+        found.update(find_words(board, positions_used, prefix, new_pos)) #set.update(set)
 
     positions_used.remove(pos) # reset coordinate for use in other recursive calls above this stack frame
     return found
@@ -100,9 +116,30 @@ def make_board(letters=None):
 def main():
     load_dictionary()
 
+
+    import pprint
+    # print PREFIXES
+    pprint.pprint(PREFIXES)
+    print DICTIONARY
+
+
+    """
+    prefixes = 
+    {'d': {'e': {'v': {'i': {'o': {'u': {'s': {}}}}}},
+       'o': {'d': {'g': {'e': {}}}, 'g': {'g': {'e': {'d': {}, 'r': {}}}}}}}
+    
+    diciontary = set(['dodge', 'dogger', 'dogged', 'devious'])
+
+    could probably also store prefixes in a trie
+    """
+
     usage = """Usage: %prog [board_letters]
 
-Example: %prog  T N N H A  I G N E I  S G E I B  C A H N I  O N F O E"""
+Example: %prog  T N N H A  I G N E I  S G E I B  C A H N I  O N F O E
+python functional_programming_style_from_GitHub.py T N N H A  I G N E I  S G E I B  C A H N I  O N F O E
+
+
+"""
 
     parser = optparse.OptionParser(usage=usage)
     options, args = parser.parse_args()
@@ -113,16 +150,15 @@ Example: %prog  T N N H A  I G N E I  S G E I B  C A H N I  O N F O E"""
         print 'invalid board input'
 
     # print_board(board)
-    print board
+    pprint.pprint(board)
     print '----'
     words = solve(board)
     total_score = 'x'
     for word in sorted(words):
         print word
 
-    print '----'
-    print 'Total score:', total_score, 'from', len(words), 'words'
-    # Total score: x from 57 words
+    # print '----'
+    # print 'Total score:', total_score, 'from', len(words), 'words'
 
 if __name__ == '__main__':
     main()
