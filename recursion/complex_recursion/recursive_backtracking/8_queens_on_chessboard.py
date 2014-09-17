@@ -5,37 +5,40 @@
 BOARD_SIZE = 8
 
 def under_attack(column, existing_queens):
-    # ASSUMES that row = len(existing_queens) + 1
-    # this is hard coded into the algorithm. that's okay.
-    row = len(existing_queens) + 1
+    # ASSUMES that row = len(existing_queens)
+    # this assumption is hard coded into the algorithm. that's okay, it makes sense here. 
+    row = len(existing_queens)
     for queen in existing_queens:
-        x,y = queen # get coordinates of existing queen
-        if x == row: return True # check row
-        if y == column: return True # check column
-        if (column-y) == (row-x): return True # check left diagonal
-        if (column-y) == -(row-x): return True # check right diagonal
+        r,c = queen # get coordinates of existing queen
+        if r == row: return True # check row
+        if c == column: return True # check column
+        if (column-c) == (row-r): return True # check left diagonal
+        if (column-c) == -(row-r): return True # check right diagonal
     return False
 
 # solve a board for n queens
 def solve(n):
     if n == 0: 
-        return [[]] # No RECURSION if n=0. 
+        return [[]]
+    
+    smaller_solutions = solve(n - 1) # solve for placing a smaller number of queens
+    # this will be a list of lists of tuples/queen coordinates
 
-    smaller_solutions = solve(n - 1) # RECURSION!!!!!!!!!!!!!!
-    solutions = [] # list of tuples of coordinates of existing queens
-    for solution in smaller_solutions: # I moved this around, so it makes more sense
-        for column in range(0, BOARD_SIZE): # I changed this, so it makes more sense
-            # try adding a new queen to row = n, column = column 
-            if not under_attack(column, solution): 
-                row = n - 1 # place queen as far to the left of the board as possible
-                solutions.append(solution + [(row, column)])
+    current_solutions = []
+    for solution in smaller_solutions: # solution is a list
+        for column in range(0, BOARD_SIZE):
+            # try adding a new queen to row = n - 1, column = column
+            # (off by one for grid coordiates that include (0,0), column = column 
+            if not under_attack(column, solution):
+                row = n - 1 # place current queen as high on the board as possible
+                # eventually, will place one queen in each of the eight rows
+                current_solutions.append(solution + [(row, column)])
+    return current_solutions
 
-    return solutions # list of list of tuples
+# WRITE A FUNCTION TO RETURN ONLY ONE SOLUTION.
 
 if __name__ == "__main__":
-    n = 2
+    n = 8
     import pprint
     pprint.pprint(solve(n))
     print len(solve(n))
-    # n = 8
-    # print len(solve(n))
