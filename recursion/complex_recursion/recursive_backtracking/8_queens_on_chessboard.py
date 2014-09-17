@@ -12,8 +12,17 @@ def under_attack(column, existing_queens):
         r,c = queen # get coordinates of existing queen
         if r == row: return True # check row
         if c == column: return True # check column
-        if (column-c) == (row-r): return True # check left diagonal
-        if (column-c) == -(row-r): return True # check right diagonal
+        if (column-c) == (row-r): return True # check left diagonal, offset is (-1, -1)
+        if (column-c) == -(row-r): return True # check right diagonal, offset is (1, 1)
+
+        # the above assumes that you are only placing queens on a board from left to right 
+        # exiting queens will only exist on the left side of the board relative to current position in consideration
+
+        # more rigorous test would be to write a while loop and 
+        # keep on adding on offset to current position until you reach the end of the board
+        # ensure you don't run into any queens along the way
+
+        # okay, actually, I lied. The above is perfectly fine. plug and chug to test!!!!!!! it's like an absolute relative positioning thing.
     return False
 
 # solve a board for n queens
