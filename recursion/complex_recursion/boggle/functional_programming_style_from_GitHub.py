@@ -58,10 +58,11 @@ def find_words(board, positions_used, prefix, pos):
         # no words with this as a prefix
         return set() # return an empty set
 
-    found = set()
+    found = set() # this will update with words we find with prefix
     if prefix in DICTIONARY:
         found.add(prefix)
-    positions_used.add(pos) # keep track of which coordinates we've visited
+
+    positions_used.add(pos) # keep track that we have visited this coordinate 
 
     for offset in OFFSETS:
         new_pos = (pos[0] + offset[0], pos[1] + offset[1])
@@ -72,7 +73,7 @@ def find_words(board, positions_used, prefix, pos):
 
         found.update(find_words(board, positions_used, prefix, new_pos))
 
-    positions_used.remove(pos) # reset for use in other recursive calls
+    positions_used.remove(pos) # reset coordinate for use in other recursive calls above this stack frame
     return found
 
 def solve(board):
