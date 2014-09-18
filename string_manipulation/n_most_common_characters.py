@@ -11,7 +11,7 @@ def most_common_chars(s, n):
 		print "There are fewer than %d characters in %r." % (n, s)
 
 	for char in s: 
-		if d.get(char):
+		if char in d:
 			d[char] += 1
 			if d[char] > d[heap.top]:
 				heap.pop()
