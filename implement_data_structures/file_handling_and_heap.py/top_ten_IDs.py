@@ -15,44 +15,62 @@
 
 # import heap_module
 
-f = open('IDs.txt')
-id_list = [x.strip() for x in f]
-f.close()
 
-# print ID_list
+# overall O(nlogn) with sorting 
+# would be O(logn) with a heap
 
-d = {}
-for item in id_list:
-    if item in d:
-        d[item] += 1
-    else:
-        d[item] = 1
+def top_ten(f):
+    f = open(f)
+    id_list = [x.strip() for x in f]
+    f.close()
 
-reverse_d = {}
-for key, value in d.iteritems():
-    if value in reverse_d:
-        reverse_d[value].append(key)
-    else:
-        reverse_d[value] = [key]
+    # print ID_list
 
-print reverse_d
+    d = {}
+    for item in id_list:
+        if item in d:
+            d[item] += 1
+        else:
+            d[item] = 1
 
-# O(nlogn)
-sorted_keys = sorted(reverse_d.keys())[::-1]
+    reverse_d = {}
+    for key, value in d.iteritems():
+        if value in reverse_d:
+            reverse_d[value].append(key)
+        else:
+            reverse_d[value] = [key]
 
-print sorted_keys
+    print reverse_d
 
-returned_keys = 0
-top_ten = []
+    # O(nlogn)
+    # sorted_keys = sorted(reverse_d.keys())[::-1]
+    sorted_keys = sorted(reverse_d.keys(), reverse = True)
 
-while returned_keys < 10:
+    print sorted_keys
+
+    returned_keys = 0
+    top_ten = []
+
+    # while returned_keys < 10:
+    # hah. What was I thinking. 
+
     for value in sorted_keys:
-        for ID in reverse_d[value]:
-            if returned_keys < 10:
+
+            for ID in reverse_d[value]:
                 top_ten.append(ID)
                 returned_keys += 1
 
-print top_ten
+                # once you reach ten keys, return those keys
+                # how to handle ties for the tenth place? discuss. 
+                if returned_keys >= 10:
+                    return top_ten
+
+
+print top_ten('IDs.txt')
+
+"""expect
+['88889213', '30957835', '59783821', '869702-1', '67920000', '34567915', '20598361', '94010-57', '69878301', '87950231']
+"""
 
 # print d
 # print len(d)
