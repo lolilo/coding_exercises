@@ -13,7 +13,7 @@
 # new_d = {value:key for key,value in d.iteritems()}
 # dictionary comprehension
 
-import heap_module
+# import heap_module
 
 f = open('IDs.txt')
 id_list = [x.strip() for x in f]
@@ -28,28 +28,54 @@ for item in id_list:
     else:
         d[item] = 1
 
+reverse_d = {}
+for key, value in d.iteritems():
+    if value in reverse_d:
+        reverse_d[value].append(key)
+    else:
+        reverse_d[value] = [key]
+
+print reverse_d
+
+# O(nlogn)
+sorted_keys = sorted(reverse_d.keys())[::-1]
+
+print sorted_keys
+
+returned_keys = 0
+top_ten = []
+
+while returned_keys < 10:
+    for value in sorted_keys:
+        for ID in reverse_d[value]:
+            if returned_keys < 10:
+                top_ten.append(ID)
+                returned_keys += 1
+
+print top_ten
+
 # print d
 # print len(d)
 
 # min heap
-top_ten = heap_module.Heap()
+# top_ten = heap_module.Heap()
 
-for key in d:
-    frequency = d[key]
-    if top_ten.size < 10:
-        top_ten.insert(key)
-    else: # already have ten things in the heap
+# for key in d:
+#     frequency = d[key]
+#     if top_ten.size < 10:
+#         top_ten.insert(key)
+#     else: # already have ten things in the heap
         
-        min_id_in_heap = top_ten.heap[1]
-        min_frequency_in_heap = d[min_id_in_heap]
+#         min_id_in_heap = top_ten.heap[1]
+#         min_frequency_in_heap = d[min_id_in_heap]
 
-        if min_frequency_in_heap < frequency:
-            top_ten.heap.popMin()
-            top_ten.insert(key)
+#         if min_frequency_in_heap < frequency:
+#             top_ten.heap.popMin()
+#             top_ten.insert(key)
 
-            # need to fix heap implementation if we want to do this. bah! 
-            # currently, this heap only handles integers
-            # I wanted to only store keys in the heap, and then look up keys in the dictionary
-            # to see their frequency value.
+#             # need to fix heap implementation if we want to do this. bah! 
+#             # currently, this heap only handles integers
+#             # I wanted to only store keys in the heap, and then look up keys in the dictionary
+#             # to see their frequency value.
 
 
