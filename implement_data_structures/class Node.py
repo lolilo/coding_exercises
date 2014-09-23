@@ -55,10 +55,11 @@ class UnorderedList:
             current = current.getNext()
         current.setNext = item
 
-    def remove(self,item):
+    def remove(self, item):
         current = self.head
         previous = None
         found = False
+        
         while not found:
             if current.getData() == item:
                 found = True

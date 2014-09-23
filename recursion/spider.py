@@ -21,8 +21,13 @@ class Spider(object):
 
 	# prints out all url, html pairs that can be reached from the start url
 	def crawl(self, start):
+
+		# implicit base case 
+		# if start in self.seen:
+			# return
+
 		html = self.get_html(start)
-		self.seen[start] = True
+		self.seen[start] = True # could also use a set here: set of seen urls
 
 		url_list = self.find_links(html)
 		print start, html
