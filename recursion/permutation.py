@@ -30,8 +30,8 @@ def permutList(l):
     return perms
 
 def permutString(s):
-    if not s:
-            return ['']
+    # if not s:
+    #         return ['']
 
     permutations = []
     for i in range(len(s)):
@@ -51,6 +51,8 @@ def permutString(s):
 print permutList(range(3))
 
 print permutString('pow')
+
+print permutString('')
 
 
 
