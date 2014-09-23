@@ -30,8 +30,10 @@ def permutList(l):
     return perms
 
 def permutString(s):
-    # if not s:
-    #         return ['']
+    # base case will only run if original input is an empty string
+    # otherwise, we are recursively calling permutList for the rest of the function
+    if not s:
+            return ['']
 
     permutations = []
     for i in range(len(s)):
@@ -50,9 +52,9 @@ def permutString(s):
 
 print permutList(range(3))
 
-# print permutString('pow')
+print permutString('pow')
 
-# print permutString('')
+print permutString('')
 
 
 
