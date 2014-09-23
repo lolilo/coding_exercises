@@ -23,7 +23,7 @@ def permutList(l):
             temp.pop(i)
 
             temp_perms = permutList(temp)
-            for r in temp_perms:
+            for r in temp_perms: # this never runs if we just have [] and not [[]]
                 perms.append([element] + r)
                 # perms.extend([[element] + r])
                 # perms += [[element] + r]
@@ -50,9 +50,9 @@ def permutString(s):
 
 print permutList(range(3))
 
-print permutString('pow')
+# print permutString('pow')
 
-print permutString('')
+# print permutString('')
 
 
 
