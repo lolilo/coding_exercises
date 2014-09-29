@@ -25,7 +25,7 @@ class Test(unittest.TestCase):
 		self.assertEqual(two_elements_sum_to_x(self.l3, -5), True)
 		self.assertEqual(two_elements_sum_to_x(self.l3, 7), True)
 		self.assertEqual(two_elements_sum_to_x(self.l3, -3), True)
-		self.assertEqual(two_elements_sum_to_x(self.l3, -2), True)
+		self.assertEqual(two_elements_sum_to_x(self.l3, -20), False)
 
 # input is an integer list and an integer x
 # returns a boolean 
@@ -47,8 +47,6 @@ def two_elements_sum_to_x(l, x):
 			return True
 
 	return False
-
-
 
 if __name__ == "__main__":
 	unittest.main()
