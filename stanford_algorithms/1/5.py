@@ -11,16 +11,21 @@ class Test(unittest.TestCase):
 		self.l2 = [1, 5, 32, 40]
 		self.l3 = range(-5, 6)
 
-	def two_elements_sum_to_x(self):
+	def test_two_elements_sum_to_x(self):
 		self.assertEqual(two_elements_sum_to_x(self.l1, 0), True)
 		self.assertEqual(two_elements_sum_to_x(self.l1, 7), True)
-		self.assertEqual(two_elements_sum_to_x(self.l1, -1), False)
+		self.assertEqual(two_elements_sum_to_x(self.l1, -1), True)
 		self.assertEqual(two_elements_sum_to_x(self.l1, 13), True)
 
 		self.assertEqual(two_elements_sum_to_x(self.l2, 45), True)
+		self.assertEqual(two_elements_sum_to_x(self.l2, 43), False)
 
 		self.assertEqual(two_elements_sum_to_x(self.l3, 0), True)
-		self.assertEqual(two_elements_sum_to_x(self.l3, 13), True)
+		self.assertEqual(two_elements_sum_to_x(self.l3, 13), False)
+		self.assertEqual(two_elements_sum_to_x(self.l3, -5), True)
+		self.assertEqual(two_elements_sum_to_x(self.l3, 7), True)
+		self.assertEqual(two_elements_sum_to_x(self.l3, -3), True)
+		self.assertEqual(two_elements_sum_to_x(self.l3, -2), True)
 
 # input is an integer list and an integer x
 # returns a boolean 
@@ -28,7 +33,7 @@ class Test(unittest.TestCase):
 def two_elements_sum_to_x(l, x):
 	element_index = 0
 	target = x - l[element_index]
-	potential_pair_index = -1
+	potential_pair_index = len(l) - 1
 
 	# also need to keep track of indexes bound by list length 
 	while potential_pair_index > element_index:
