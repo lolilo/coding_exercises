@@ -1,4 +1,3 @@
-
 # returns the most common substring of length 2 from an input string
 # time: O(n) one pass to make dict and find the max within the dict
 # space: O(n)
@@ -65,21 +64,15 @@ def most_common_substring_slower(s):
         if substrings[i] == substrings[i+1]:
             count += 1
         else: # substrings are not equal
-            # print substrings[i]
-            # print count
             if count > max_count:
                 out = substrings[i]
                 max_count = count
-            #     count = 1 # reset count = 1
-            # else: # count not greater than max_count
-            #     count = 1
             count = 1
         i += 1
 
-    # EDGE CASE. BE CAREFUL. Very last substrings are most requent. 
+    # EDGE CASE. BE CAREFUL. Very last substrings are most frequent. 
     if count > max_count:
         out = substrings[-1]
-
     return out
 
 print most_common_substring_slower(s)
