@@ -2,39 +2,39 @@
 import unittest
 
 class Test(unittest.TestCase):
-    def test_isMatch_basic(self):
-        self.assertEqual(isMatch('aa*', 'a'), True)
-        self.assertEqual(isMatch('.*', ''), True)
-        self.assertEqual(isMatch('a.*', 'a'), True)
-        self.assertEqual(isMatch('.', 'a'), True)
-        self.assertEqual(isMatch('.*', 'anblskfj'), True)
-        self.assertEqual(isMatch('a*', 'anblskfj'), False)
+    def test_is_match_basic(self):
+        self.assertEqual(is_match('aa*', 'a'), True)
+        self.assertEqual(is_match('.*', ''), True)
+        self.assertEqual(is_match('a.*', 'a'), True)
+        self.assertEqual(is_match('.', 'a'), True)
+        self.assertEqual(is_match('.*', 'anblskfj'), True)
+        self.assertEqual(is_match('a*', 'anblskfj'), False)
 
-        self.assertEqual(isMatch('aa', ''), False)
-        self.assertEqual(isMatch('aaa', 'a'), False)
+        self.assertEqual(is_match('aa', ''), False)
+        self.assertEqual(is_match('aaa', 'a'), False)
 
-    def test_isMatch_edge(self):
-        self.assertEqual(isMatch('a*', ''), True)
-        self.assertEqual(isMatch('z*b*', ''), True)
-        self.assertEqual(isMatch('.*j', 'anblskfj'), True)
+    def test_is_match_edge(self):
+        self.assertEqual(is_match('a*', ''), True)
+        self.assertEqual(is_match('z*b*', ''), True)
+        self.assertEqual(is_match('.*j', 'anblskfj'), True)
 
-        self.assertEqual(isMatch('k', 'j'), False)
-        self.assertEqual(isMatch('.*k', 'j'), False)
-        self.assertEqual(isMatch('.*k', 'anblskfj'), False)
+        self.assertEqual(is_match('k', 'j'), False)
+        self.assertEqual(is_match('.*k', 'j'), False)
+        self.assertEqual(is_match('.*k', 'anblskfj'), False)
 
-    def test_isMatch_break(self):
-        self.assertEqual(isMatch('*', 'a'), False)
-        self.assertEqual(isMatch('a*aa', 'aa'), True)
-        self.assertEqual(isMatch('a.*c.*d', 'abcbcd'), True)
-        self.assertEqual(isMatch('a.*x.*d', 'abcbcd'), False)
-        self.assertEqual(isMatch('**bc', 'bc'), True) # breaks for odd number of stars. can implement checker to ignore extra stars
+    def test_is_match_break(self):
+        self.assertEqual(is_match('*', 'a'), False)
+        self.assertEqual(is_match('a*aa', 'aa'), True)
+        self.assertEqual(is_match('a.*c.*d', 'abcbcd'), True)
+        self.assertEqual(is_match('a.*x.*d', 'abcbcd'), False)
+        self.assertEqual(is_match('**bc', 'bc'), True) # breaks for odd number of stars. can implement checker to ignore extra stars
 
 
 def current_chars_match(pattern, string, pi, si):
     return pattern[pi] == string[si] or pattern[pi] == '.'
 
 
-def is_match(pattern, string, pi, si):
+def is_match(pattern, string, pi=0, si=0):
     len_pattern = len(pattern)
     len_string = len(string)
 
@@ -55,10 +55,6 @@ def is_match(pattern, string, pi, si):
     return is_match(pattern, string, pi+2, si)
 
 
-def isMatch(pattern, string):
-    return is_match(pattern, string, 0, 0)
-
-                          
 def main():
     unittest.main()
 
