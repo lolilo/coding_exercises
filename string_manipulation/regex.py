@@ -23,6 +23,8 @@ class Test(unittest.TestCase):
     def test_regex_break(self):
         self.assertEqual(regex('*', 'a'), False)
         self.assertEqual(regex('a*aa', 'aa'), True)
+        self.assertEqual(regex('a.*c.*d', 'abcbcd'), True)
+        # self.assertEqual(regex('a.*x.*d', 'abcbcd'), False) # Breeealdskfjas;ldfjk -- go with recursive solution. :(
 
 
 def isMatch(pattern_char, string_char):
