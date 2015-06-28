@@ -8,7 +8,7 @@ char a - z
 import unittest
 
 class Test(unittest.TestCase):
-    def xtest_regex_basic(self):
+    def test_regex_basic(self):
         self.assertEqual(regex('aa*', 'a'), True)
         self.assertEqual(regex('a.*', 'a'), True)
         self.assertEqual(regex('.', 'a'), True)
@@ -34,10 +34,12 @@ def regex(pattern, string):
     si = 0
     len_pattern = len(pattern) # do this so that we don't need to calculate length each time
     len_string = len(string)
+    has_star_in_pattern = False
 
     while pi < len_pattern and si < len_string:
         current_pattern_char = pattern[pi]
         if current_pattern_char == '*':
+            has_star_in_pattern = True
             # assume that pattern will not start with a *; there will always be a char before it
             prev_pattern_char = pattern[pi - 1]
             while si < len_string and isMatch(prev_pattern_char, string[si]):
@@ -66,18 +68,19 @@ def regex(pattern, string):
 
     # 'a*aa', 'aa'
     def check_last_chars_before_star_match(pattern, string):
-        if len(string) == 0:
+        if has_star_in_pattern:
+            if len(string) == 0:
+                return True
+            pi, si = -1, -1
+            while pattern[pi] != '*' and pi > - len_pattern and si > - len_string:
+                current_last_pattern_char = pattern[pi]
+                current_last_string_char = string[si]
+                if isMatch(current_last_pattern_char, current_last_string_char):
+                    pi -= 1
+                    si -= 1
+                else:
+                    return False
             return True
-        pi, si = -1, -1
-        while pattern[pi] != '*' and pi > - len_pattern:
-            current_last_pattern_char = pattern[pi]
-            current_last_string_char = string[si]
-            if isMatch(current_last_pattern_char, current_last_string_char):
-                pi -= 1
-                si -= 1
-            else:
-                return False
-        return True
 
     # print 'this is string', string
     # print 'check_trailing_star_and_empty_string', check_trailing_star_and_empty_string(pi)
