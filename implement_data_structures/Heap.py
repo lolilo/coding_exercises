@@ -1,3 +1,6 @@
+# min heap
+# children are always smaller than parents
+
 class Heap:
 	def __init__(self):
 		self.heap = [0]
@@ -19,7 +22,7 @@ class Heap:
 		self.percUp(self.size) # sort 
 
 	def percDown(self, i):
-		while (i * 2) <= self.size: # heap[i] will always have at least one child
+		while (i * 2) <= self.size: # check for children
 			min_child = self.minChild(i) # get the smaller child index of parent @ i
 			if self.heap[min_child] < self.heap[i]:
 				# switch
