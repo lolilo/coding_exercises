@@ -10,14 +10,30 @@ Write an efficient function that takes stock_prices_yesterday and returns the be
 
 # similar to max continuous subsequence?
 def get_max_profit(stock_prices_yesterday): 
-    length_times = len(stock_prices_yesterday) - 1 
-    current_max = 0
-    final_max = 0
+    length_times = len(stock_prices_yesterday)
+    if length_times < 1:
+        raise ValueError('List can not be empty.')
+    current_min_price = stock_prices_yesterday[0]
+    potential_max_profit = 0
+    final_max_profit = 0
     for i in xrange(length_times):
-        current_max = max(stock_prices_yesterday[i:]) - stock_prices_yesterday[i]
-        final_max = max(current_max, final_max)
-    return final_max
+        potential_max_profit = stock_prices_yesterday[i] - current_min_price
+        current_min_price = min(current_min_price, stock_prices_yesterday[i])
+        final_max_profit = max(potential_max_profit, final_max_profit)
+    return final_max_profit
 
-stock_prices_yesterday = [10, 7, 5, 8, 11, 9]
-print get_max_profit(stock_prices_yesterday)
+# stock_prices_yesterday = [10, 7, 5, 8, 11, 9]
+# print get_max_profit(stock_prices_yesterday)
 # returns 6 (buying for $5 and selling for $11)
+
+import unittest
+
+
+class Test(unittest.TestCase):
+
+    def test_get_max_profit(self):
+        self.assertEqual(get_max_profit([10, 7, 5, 8, 11, 9]), 6)
+        self.assertEqual(get_max_profit([10, 7, 5, 4, 4, 4, 2]), 0)
+        self.assertRaises(ValueError, get_max_profit, [])
+
+unittest.main()
