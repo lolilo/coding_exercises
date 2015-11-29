@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self,initdata):
+    def __init__(self, initdata):
         self.data = initdata
         self.next = None
 
@@ -9,10 +9,10 @@ class Node:
     def getNext(self):
         return self.next
 
-    def setData(self,newdata):
+    def setData(self, newdata):
         self.data = newdata
 
-    def setNext(self,newnext):
+    def setNext(self, newnext):
         self.next = newnext
 
 
