@@ -8,7 +8,7 @@
 # C A H N I
 # O N F O E
 
-# board is in the form 
+# board is in the form
 # {(1, 3): 'a', (3, 0): 'h', (2, 1): 'n', (0, 3): 'c', (4, 0): 'a', (1, 2): 'g', (3, 3): 'n', (4, 4): 'e', (0, 4): 'o', (4, 1): 'i', (1, 1): 'g', (3, 2): 'i', (0, 0): 't', (2, 2): 'e', (1, 4): 'n', (2, 3): 'h', (4, 2): 'b', (1, 0): 'n', (0, 1): 'i', (3, 1): 'e', (2, 4): 'f', (2, 0): 'n', (4, 3): 'i', (3, 4): 'o', (0, 2): 's'}
 
 import optparse
@@ -22,7 +22,7 @@ OFFSETS = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
 WORD_LIST_PATH = 'toy_words.txt'
 
 def load_dictionary():
-    global DICTIONARY 
+    global DICTIONARY
     global PREFIXES # in the form of nested dictionaries
 
     DICTIONARY = set()
@@ -53,7 +53,7 @@ def is_prefix(prefix):
         node = node[letter]
     return True
 
-# starting off, positions_used = set(), prefix = ''. We pass this in via the original caller. 
+# starting off, positions_used = set(), prefix = ''. We pass this in via the original caller.
 # update the prefix to include letter at current position
 # if the updated prefix is not a valid prefix, return an empty set
 
@@ -61,7 +61,7 @@ def is_prefix(prefix):
 # if prefix is in the word dictionary, add prefix to found
 # keep track that we have used this current position, add it to the set positions_used
 # for every possible valid offset / for every possible direction, recursively call find_words and update the set found
-    # invalid are movements that go to a previously visited position / node or go off the boggle board 
+    # invalid are movements that go to a previously visited position / node or go off the boggle board
 # remove current position from position_used to allow it for use in earlier recursive stack frames/calls
     # recursive backtracking?
 # return the set found
@@ -78,7 +78,7 @@ def find_words(board, positions_used, prefix, pos):
     if prefix in DICTIONARY:
         found.add(prefix)
 
-    positions_used.add(pos) # keep track that we have visited this coordinate 
+    positions_used.add(pos) # keep track that we have visited this coordinate
 
     for offset in OFFSETS:
         new_pos = (pos[0] + offset[0], pos[1] + offset[1])
@@ -101,7 +101,7 @@ def solve(board):
     return words
 
 
-def make_board(letters=None): 
+def make_board(letters=None):
     board = {}
     y = 0
     x = 0
@@ -124,10 +124,10 @@ def main():
 
 
     """
-    prefixes = 
+    prefixes =
     {'d': {'e': {'v': {'i': {'o': {'u': {'s': {}}}}}},
        'o': {'d': {'g': {'e': {}}}, 'g': {'g': {'e': {'d': {}, 'r': {}}}}}}}
-    
+
     diciontary = set(['dodge', 'dogger', 'dogged', 'devious'])
 
     could probably also store prefixes in a trie
