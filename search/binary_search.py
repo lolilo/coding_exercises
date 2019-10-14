@@ -1,47 +1,45 @@
-def binary_search(l, t):
-    found = False
-    while not found and len(l) > 0:
-        i = l[len(l)//2]
-        if t > i: 
-            l = l[i+1:] #why doesn't this give an index error
-        elif t < i:
-            l = l[:i]
+def binary_search(l, target):
+    start_index, end_index = 0, len(l) - 1
+
+    while start_index <= end_index:
+        mid_index = start_index + (end_index - start_index) // 2
+        value = l[mid_index]
+
+        if value == target:
+            return mid_index
+        elif value < target:
+            start_index = mid_index + 1
         else:
-            found = True
-    return found
+            end_index = mid_index -1 
 
-# l = range(5)
+    return -1
 
-# print binary_search(l, 20)
-
-def binary_search2(l, t):
-    while len(l) > 0:
-        i = l[len(l)//2]
-        if t > i: 
-            l = l[i+1:] #why doesn't this give an index error
-        elif t < i:
-            l = l[:i]
-        else:
-            return True
-    return False
-
-# l = range(5)
-# print binary_search2(l, 2)
-
-def recursive_binary_search(l, t):
+def recursive_binary_search(l, target):
     if len(l) < 1:
         return False
 
-    i = len(l)//2
-    curr = l[i]
+    mid_index = len(l)//2
+    value = l[mid_index]
 
-    if curr == t:
+    if value == target:
         return True
-    if t > curr:
-        return recursive_binary_search(l[i+1:], t)
-    elif t < curr:
-        return recursive_binary_search(l[:i], t)
+    if target > value:
+        return recursive_binary_search(l[mid_index + 1:], target)
+    elif target < value:
+        return recursive_binary_search(l[:mid_index], target)
 
 
-l = range(5)
-print recursive_binary_search(l, 0)
+import unittest
+
+class Test(unittest.TestCase):
+    def test_binary_search(self):
+        self.assertEqual(binary_search(range(5), 3), 3)
+        self.assertEqual(binary_search(range(5), 5), -1)
+
+    def test_recursive_binary_search(self):             
+        self.assertEqual(recursive_binary_search(range(5), 3), True)
+
+unittest.main()
+
+# l = range(5)
+# print recursive_binary_search(l, 0)
