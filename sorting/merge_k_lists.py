@@ -1,3 +1,11 @@
+# Time complexity : O(kN) where k is the number of lists and N is the number of elements the longest list (N comparisons for k lists).
+
+# We can merge two sorted linked list in O(n) time where n is the total number of elements in two lists.
+
+# Space complexity : O(1)
+# We can merge two sorted linked list in O(1) space (in place),
+# although here it is O(N) where we create a new list for simplicity.
+
 def mergeKLists(lists):    
 
     if not lists:
