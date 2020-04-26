@@ -14,6 +14,7 @@ def memoize(fn):
 
         if not cache.get(key):
             cache[key] = fn(*args)
+        # print cache 
         return cache[key]         
 
     return decorated_fn
@@ -26,7 +27,8 @@ def add_to_total(scores, t): # takes in a list of ints and a target score
         return 1
 
     total_possible_ways = 0
-    for score in scores:
+    # for score in scores:
+    for score in [score for score in scores if score <= t]:
         possible_ways = add_to_total(scores, t - score)
         if possible_ways > 0:
             total_possible_ways += possible_ways
