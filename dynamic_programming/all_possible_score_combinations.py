@@ -5,48 +5,45 @@ print out all the possible ways to arrive at that target score.
 ([2, 6, 10], 10) -> [[2, 2, 2, 2, 2], [6, 2, 2], [10]]
 """
 
-def memoize(fn):
-    cache = {}
-    def decorated_fn(*args):
-        # only need t as a key; assume scores array will be the same. 
-        # breaks if method takes in varying scores.
-        key = tuple((tuple(args[0]), args[1]))
+def combinationSum(scores, index, target):
+    if target == 0:
+        return [[]]
 
-        if not cache.get(key):
-            cache[key] = fn(*args)
-        print cache 
-        return cache[key]         
+    curr_res = []
+    for curr_i in range(index, len(scores)):
+        if target < scores[curr_i]:
+            break
+        next_res = combinationSum(scores, curr_i, target - scores[curr_i])
 
-    return decorated_fn
+        if next_res != []:
+            for array in next_res: 
+                curr_res.append(array + [scores[curr_i]])
+    return curr_res
 
-@memoize
-def add_to_total(scores, t): # takes in a list of ints and a target score
-    if t == 0:
-        return 1
-    if t < min(scores):
-        return 0
-    # if t == min(scores):
-    #     return 1
+print combinationSum([2, 3, 6, 7], 0, 7) == [[3, 2, 2], [7]]
+print combinationSum([2, 6, 10], 0, 10) == [[2, 2, 2, 2, 2], [6, 2, 2], [10]]
 
-    total_possible_ways = 0
-    for score in [score for score in scores if score <= t]:
-        if t == 3:
-            print 'score', score 
-            print 'total_possible_ways', total_possible_ways
-            print '' 
-        total_possible_ways += add_to_total(scores, t - score)
-        # if possible_ways > 0:   
-            # total_possible_ways += possible_ways
-    return total_possible_ways
 
-    # for score in [score for score in scores if score <= t]:
-    #     possible_ways = add_to_total(scores, t - score)
-    #     if possible_ways > 0:
-    #         total_possible_ways += possible_ways
-    # return total_possible_ways
+class Solution:
+    def combinationSum(self, candidates, target):
+        # candidates.sort()
+        return self.combinationSumHelper(candidates, 0, target)
+    
+    def combinationSumHelper(self, candidates, idx, target):
+        if target == 0:
+            return [[]]
+        
+        cur_res = []
+        for i in range(idx, len(candidates)):
+            if target < candidates[i]:
+                break
+            nxt_res = self.combinationSumHelper(candidates, i, target - candidates[i])
+            
+            if nxt_res != []:
+                for s in nxt_res:
+                    cur_res.append(s + [candidates[i]])
+        return cur_res
 
-print add_to_total([2], 3) == 0 # [1, 1], [2]
-# print add_to_total([1, 2, 5], 2) == 2 # [1, 1], [2]
-print add_to_total([1, 2, 5], 3) == 2 # [1, 1, 1], [1, 2]
-# print add_to_total([1, 2, 5], 5) == 4
-# print add_to_total([2, 6, 10], 10) == 3
+print Solution().combinationSum([2, 3, 6, 7], 7) == [[3, 2, 2], [7]]
+print Solution().combinationSumHelper([2, 3, 6, 7], 0, 7) == [[3, 2, 2], [7]]
+print Solution().combinationSum([2, 6, 10], 10) == [[2, 2, 2, 2, 2], [6, 2, 2], [10]]
